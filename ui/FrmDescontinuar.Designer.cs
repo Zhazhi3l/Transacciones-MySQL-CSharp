@@ -32,9 +32,11 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             txtBuscarCodigo = new TextBox();
             btnBuscar = new Button();
+            label2 = new Label();
             tableLayoutPanel3 = new TableLayoutPanel();
-            cmbFiltros = new ComboBox();
             btnDescontinuar = new Button();
+            cmbFiltros = new ComboBox();
+            label1 = new Label();
             dgvProductos = new DataGridView();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -58,7 +60,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 62.5F));
-            tableLayoutPanel1.Size = new Size(888, 513);
+            tableLayoutPanel1.Size = new Size(1047, 513);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -68,39 +70,51 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Controls.Add(txtBuscarCodigo, 0, 1);
             tableLayoutPanel2.Controls.Add(btnBuscar, 1, 2);
+            tableLayoutPanel2.Controls.Add(label2, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(594, 3);
+            tableLayoutPanel2.Location = new Point(700, 3);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.Padding = new Padding(0, 20, 0, 20);
             tableLayoutPanel2.RowCount = 3;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.043478F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 43.47826F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 43.47826F));
-            tableLayoutPanel2.Size = new Size(291, 186);
+            tableLayoutPanel2.Size = new Size(344, 186);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // txtBuscarCodigo
             // 
             tableLayoutPanel2.SetColumnSpan(txtBuscarCodigo, 2);
             txtBuscarCodigo.Dock = DockStyle.Fill;
-            txtBuscarCodigo.Location = new Point(3, 42);
+            txtBuscarCodigo.Location = new Point(3, 27);
             txtBuscarCodigo.Name = "txtBuscarCodigo";
-            txtBuscarCodigo.Size = new Size(285, 27);
+            txtBuscarCodigo.Size = new Size(338, 27);
             txtBuscarCodigo.TabIndex = 0;
+            txtBuscarCodigo.KeyDown += txtBuscarCodigo_KeyDown;
             // 
             // btnBuscar
             // 
             btnBuscar.BackColor = Color.LightBlue;
-            btnBuscar.Dock = DockStyle.Right;
+            btnBuscar.Dock = DockStyle.Top;
             btnBuscar.FlatAppearance.BorderSize = 0;
             btnBuscar.Font = new Font("Franklin Gothic Medium", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnBuscar.ForeColor = Color.WhiteSmoke;
-            btnBuscar.Location = new Point(194, 105);
+            btnBuscar.Location = new Point(175, 107);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.Size = new Size(94, 58);
+            btnBuscar.Size = new Size(166, 76);
             btnBuscar.TabIndex = 1;
             btnBuscar.Text = "Buscar";
             btnBuscar.UseVisualStyleBackColor = false;
+            btnBuscar.Click += btnBuscar_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Franklin Gothic Medium", 12F, FontStyle.Italic);
+            label2.Location = new Point(3, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(160, 24);
+            label2.TabIndex = 2;
+            label2.Text = "Buscar producto por código";
             // 
             // tableLayoutPanel3
             // 
@@ -108,8 +122,9 @@
             tableLayoutPanel1.SetColumnSpan(tableLayoutPanel3, 2);
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 73.52941F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.4705868F));
+            tableLayoutPanel3.Controls.Add(btnDescontinuar, 0, 2);
             tableLayoutPanel3.Controls.Add(cmbFiltros, 0, 1);
-            tableLayoutPanel3.Controls.Add(btnDescontinuar, 1, 2);
+            tableLayoutPanel3.Controls.Add(label1, 0, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 3);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -118,8 +133,23 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            tableLayoutPanel3.Size = new Size(585, 186);
+            tableLayoutPanel3.Size = new Size(691, 186);
             tableLayoutPanel3.TabIndex = 1;
+            // 
+            // btnDescontinuar
+            // 
+            btnDescontinuar.BackColor = Color.LightBlue;
+            btnDescontinuar.Dock = DockStyle.Fill;
+            btnDescontinuar.FlatAppearance.BorderSize = 0;
+            btnDescontinuar.Font = new Font("Franklin Gothic Medium", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDescontinuar.ForeColor = Color.WhiteSmoke;
+            btnDescontinuar.Location = new Point(3, 95);
+            btnDescontinuar.Name = "btnDescontinuar";
+            btnDescontinuar.Size = new Size(502, 59);
+            btnDescontinuar.TabIndex = 5;
+            btnDescontinuar.Text = "Descontinuar";
+            btnDescontinuar.UseVisualStyleBackColor = false;
+            btnDescontinuar.Click += btnDescontinuar_Click;
             // 
             // cmbFiltros
             // 
@@ -127,22 +157,19 @@
             cmbFiltros.FormattingEnabled = true;
             cmbFiltros.Location = new Point(3, 30);
             cmbFiltros.Name = "cmbFiltros";
-            cmbFiltros.Size = new Size(424, 28);
+            cmbFiltros.Size = new Size(502, 28);
             cmbFiltros.TabIndex = 0;
+            cmbFiltros.SelectedIndexChanged += cmbFiltros_SelectedIndexChanged;
             // 
-            // btnDescontinuar
+            // label1
             // 
-            btnDescontinuar.BackColor = Color.LightBlue;
-            btnDescontinuar.Dock = DockStyle.Bottom;
-            btnDescontinuar.FlatAppearance.BorderSize = 0;
-            btnDescontinuar.Font = new Font("Franklin Gothic Medium", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDescontinuar.ForeColor = Color.WhiteSmoke;
-            btnDescontinuar.Location = new Point(433, 125);
-            btnDescontinuar.Name = "btnDescontinuar";
-            btnDescontinuar.Size = new Size(149, 29);
-            btnDescontinuar.TabIndex = 1;
-            btnDescontinuar.Text = "Descontinuar";
-            btnDescontinuar.UseVisualStyleBackColor = false;
+            label1.AutoSize = true;
+            label1.Font = new Font("Franklin Gothic Medium", 12F, FontStyle.Italic);
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(65, 25);
+            label1.TabIndex = 2;
+            label1.Text = "Filtros";
             // 
             // dgvProductos
             // 
@@ -157,16 +184,16 @@
             dgvProductos.Name = "dgvProductos";
             dgvProductos.ReadOnly = true;
             dgvProductos.RowHeadersVisible = false;
-            dgvProductos.RowHeadersWidth = 51;
+            dgvProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProductos.Size = new Size(882, 315);
+            dgvProductos.Size = new Size(1041, 315);
             dgvProductos.TabIndex = 2;
             // 
             // FrmDescontinuar
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(888, 513);
+            ClientSize = new Size(1047, 513);
             Controls.Add(tableLayoutPanel1);
             Name = "FrmDescontinuar";
             StartPosition = FormStartPosition.CenterScreen;
@@ -176,6 +203,7 @@
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             ResumeLayout(false);
         }
@@ -188,7 +216,9 @@
         private Button btnBuscar;
         private TableLayoutPanel tableLayoutPanel3;
         private ComboBox cmbFiltros;
-        private Button btnDescontinuar;
         private DataGridView dgvProductos;
+        private Label label2;
+        private Label label1;
+        private Button btnDescontinuar;
     }
 }

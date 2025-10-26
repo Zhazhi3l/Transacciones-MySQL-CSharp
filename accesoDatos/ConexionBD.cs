@@ -125,7 +125,6 @@ namespace Transacciones_MySQL_CSharp.accesoDatos
                 if (conx == null) return false;
 
                 MySqlTransaction transaction =  conx.BeginTransaction();
-
                 MySqlCommand cmd = new MySqlCommand(query, conx, transaction);
                 cmd.Parameters.AddWithValue("@clave", claveEna);
 

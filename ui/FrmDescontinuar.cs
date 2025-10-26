@@ -50,5 +50,82 @@ namespace Transacciones_MySQL
             dgvProductos.DataSource = null;
             dgvProductos.DataSource = listaFiltrada;
         }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            BuscarYMostrarProducto(txtBuscarCodigo.Text.Trim());
+        }
+
+        private void btnDescontinuar_Click(object sender, EventArgs e)
+        {
+            if (dgvProductos.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione un producto de la lista.", "Sin Selección", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtBuscarCodigo.Focus();
+                return;
+            }
+
+            Producto productoSeleccionado = (Producto)dgvProductos.CurrentRow.DataBoundItem;
+
+            var confirmacion = MessageBox.Show(
+                $"¿Seguro que desea descontinuar '{productoSeleccionado.Nombre}'?",
+                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
+            {
+                bool si = _conexion.DescontinuarProducto(productoSeleccionado.ClaveENA_13);
+
+                if (si)
+                {
+                    MessageBox.Show("Producto descontinuado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _listaProductos = _conexion.ObtenerTodosLosProductos();
+                    FiltrarGrid();
+                }
+                else
+                {
+                    MessageBox.Show("Error al descontinuar el producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            txtBuscarCodigo.Focus();
+        }
+
+        private void cmbFiltros_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FiltrarGrid();
+            txtBuscarCodigo.Focus();
+        }
+
+        private void txtBuscarCodigo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                BuscarYMostrarProducto(txtBuscarCodigo.Text.Trim());
+            }
+        }
+
+        private void BuscarYMostrarProducto(string codigo)
+        {
+            if (string.IsNullOrEmpty(codigo))
+            {
+                FiltrarGrid();
+                return;
+            }
+            Producto productoEncontrado = _listaProductos
+                .FirstOrDefault(p => p.ClaveENA_13 == codigo);
+            dgvProductos.DataSource = null;
+
+            if (productoEncontrado != null)
+            {
+                List<Producto> listaResultado = new List<Producto> { productoEncontrado };
+                dgvProductos.DataSource = listaResultado;
+            }
+            else
+            {
+                MessageBox.Show("Producto no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            txtBuscarCodigo.Clear();
+            txtBuscarCodigo.Focus();
+        }
     }
 }
