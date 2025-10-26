@@ -5,9 +5,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Transacciones_MySQL.modelos;
+using Transacciones_MySQL_CSharp.modelos;
 
-namespace Transacciones_MySQL.accesoDatos
+namespace Transacciones_MySQL_CSharp.accesoDatos
 {
     public class ConexionBD
     {

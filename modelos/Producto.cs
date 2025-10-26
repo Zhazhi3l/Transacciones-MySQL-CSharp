@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Transacciones_MySQL.modelos
+namespace Transacciones_MySQL_CSharp.modelos
 {
     public class Producto
     {
