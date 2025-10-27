@@ -58,26 +58,17 @@ namespace Transacciones_MySQL
 
         private void btnDescontinuar_Click(object sender, EventArgs e)
         {
-            if (dgvProductos.CurrentRow == null)
-            {
-                MessageBox.Show("Seleccione un producto de la lista.", "Sin Selección", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtBuscarCodigo.Focus();
-                return;
-            }
-
-            Producto productoSeleccionado = (Producto)dgvProductos.CurrentRow.DataBoundItem;
-
             var confirmacion = MessageBox.Show(
-                $"¿Seguro que desea descontinuar '{productoSeleccionado.Nombre}'?",
+                "¿Seguro que desea descontinuar todos los productos?",
                 "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirmacion == DialogResult.Yes)
             {
-                bool si = _conexion.DescontinuarProducto(productoSeleccionado.ClaveENA_13);
+                bool si = _conexion.DescontinuarProductos(_listaProductos);
 
                 if (si)
                 {
-                    MessageBox.Show("Producto descontinuado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Productos descontinuados exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     _listaProductos = _conexion.ObtenerTodosLosProductos();
                     FiltrarGrid();
                 }

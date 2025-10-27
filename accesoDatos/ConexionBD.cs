@@ -115,7 +115,41 @@ namespace Transacciones_MySQL_CSharp.accesoDatos
             return productos;
         }
 
-        public bool DescontinuarProducto(string claveEna)
+        public bool DescontinuarProductos(List<Producto> listaProductos)
+        {
+            string query = "UPDATE productos SET descontinuado = true WHERE claveENA_13 = @clave;";
+
+            using(MySqlConnection conx = GetConnection())
+            {
+                if (conx == null) return false;
+
+                MySqlTransaction transaction = conx.BeginTransaction();
+                try
+                {
+                    foreach (Producto producto in listaProductos)
+                    {
+                        using (MySqlCommand cmd = new MySqlCommand(query, conx, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@clave", producto.ClaveENA_13);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show($"Error en la transacción: {ex.Message}\nSe revirtieron los cambios.", "Error de Transacción", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+            }
+        }
+
+
+        /*
+        public bool DescontinuarUnProducto(string claveEna)
         {
             int filasModificadas = 0;
             string query = "UPDATE productos SET descontinuado = true WHERE claveENA_13 = @clave";
@@ -151,5 +185,6 @@ namespace Transacciones_MySQL_CSharp.accesoDatos
                 }
             }
         }
+        */
     }
 }
